@@ -7,38 +7,35 @@
 
 using namespace std;
 
-
 int solution(int n, vector<int> lost, vector<int> reserve) {
-	int answer = 0;
-	
+    int answer = 0;
+
 	unordered_map <int, int> losts;
+
+	sort(lost.begin(), lost.end());
+	sort(reserve.begin(), reserve.end());
 
 	for (int num : lost)
 		losts[num];
 
+    int i = 0;
 	for (int num : reserve) {
-		cout << num << endl;
 		if (losts.find(num) != losts.end()) {
-			//Ã£¾ÒÀ¸¸é
+			//ÃƒÂ£Â¾Ã’Ã€Â¸Â¸Ã©
 			losts.erase(losts.find(num));
 		}
-		else if (num - 1 >= 0 && losts.find(num - 1) != losts.end()) {
+		else if (losts.find(num - 1) != losts.end()) {
 			losts.erase(losts.find(num - 1));
 		}
-		else if (num + 1 <= n && losts.find(num + 1) != losts.end()) {
+		else if (losts.find(num + 1) != losts.end() && num + 1 != reserve[i + 1]) {
 			losts.erase(losts.find(num + 1));
 		}
+        i++;
 	}
 
 	answer = n - losts.size();
-
-	cout << "\nÁ¤´ä : " << answer << endl;
-	
-	for (auto i = losts.begin(); i != losts.end(); i++)
-		cout << i->first << " ";
-	cout << endl;
-
-	return answer;
+    
+    return answer;
 }
 
 int main() {
